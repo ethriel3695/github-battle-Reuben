@@ -87,8 +87,8 @@ class Battle extends React.Component {
     handleSubmit(id, username) {
         this.setState(function () {
             let newState = {};
-            newState[id + 'Name'] = username;
-            newState[id + 'Image'] = 'https://github.com/' + username + '.png?size=200';
+            newState[`${id}Name`] = username;
+            newState[`${id}Image`] = `https://github.com/${username}.png?size=200`;
             return newState;
         });
     }
@@ -96,18 +96,18 @@ class Battle extends React.Component {
     handleReset(id) {
         this.setState(function () {
             let newState = {};
-            newState[id + 'Name'] = '';
-            newState[id + 'Image'] = null;
+            newState[`${id}Name`] = '';
+            newState[`${id}Image`] = null;
             return newState;
         })
     }
 
     render() {
-        let match = this.props.match;
-        let playerOneName = this.state.playerOneName;
-        let playerTwoName = this.state.playerTwoName;
-        let playerOneImage = this.state.playerOneImage;
-        let playerTwoImage = this.state.playerTwoImage;
+        const { match } = this.props;
+        const { playerOneName } = this.state;
+        const { playerTwoName } = this.state;
+        const { playerOneImage } = this.state;
+        const { playerTwoImage } = this.state;
 
         return (
             <div>
@@ -153,9 +153,9 @@ class Battle extends React.Component {
                     <Link
                         className='button'
                         to={{
-                            pathname: match.url + '/results',
-                            search: `?playerOneName=` + playerOneName + '&playerTwoName=' +
-                            playerTwoName
+                            pathname: `${match.url}/results`,
+                            search: `?playerOneName=${playerOneName}&playerTwoName=${
+                            playerTwoName}`
                         }}>
                         Battle
                     </Link>}

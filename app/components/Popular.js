@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import api from '../utils/api';
+import { fetchPopularRepos } from '../utils/api';
 import Loading from './Loading';
 
-function SelectLanguage (props) {
+function SelectLanguage ({selectedLanguage, onSelect}) {
     let languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python'];
 
     return (
@@ -11,8 +11,8 @@ function SelectLanguage (props) {
         {languages.map((lang) => {
             return (
                 <li 
-                    style={lang === props.selectedLanguage ? { color: '#d0021b'}: null}
-                    onClick={props.onSelect.bind(null, lang)}
+                    style={lang === selectedLanguage ? { color: '#d0021b'}: null}
+                    onClick={onSelect.bind(null, lang)}
                     key={lang}>
                     {lang}
                 </li>
@@ -22,10 +22,10 @@ function SelectLanguage (props) {
     )
 }
 
-function RepoGrid (props) {
+function RepoGrid ({repos}) {
     return (
         <ul className='popular-list'>
-            {props.repos.map(function (repo, index){
+            {repos.map((repo, index) => {
                 return (
                     <li key={repo.name} className='popular-item'>
                         <div className='poular-rank'>#{index + 1}</div>
@@ -34,7 +34,7 @@ function RepoGrid (props) {
                                 <img
                                     className='avatar'
                                     src={repo.owner.avatar_url}
-                                    alt={'Avatar for ' + repo.owner.login}
+                                    alt={`Avatar for ${repo.owner.login}`}
                                 />
                             </li>
                             <li><a href={repo.html_url}>{repo.name}</a></li>
@@ -79,7 +79,7 @@ class Popular extends React.Component {
                 repos: null
             }
         });
-        api.fetchPopularRepos(lang)
+        fetchPopularRepos(lang)
             .then((repos) => {
                 this.setState(function () {
                     return {

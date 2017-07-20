@@ -1,6 +1,6 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import webpack from 'webpack';
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var webpack = require('webpack');
 
 const config = {
     entry: './app/index.js',
@@ -35,4 +35,4 @@ if (process.env.NODE_ENV === 'production') {
     )
 }
 
-export default config;
+module.exports = config;
