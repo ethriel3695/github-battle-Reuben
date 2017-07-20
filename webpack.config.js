@@ -1,8 +1,8 @@
-var path = require('path');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var webpack = require('webpack');
+import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import webpack from 'webpack';
 
-var config = {
+const config = {
     entry: './app/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -35,4 +35,4 @@ if (process.env.NODE_ENV === 'production') {
     )
 }
 
-module.exports = config;
+export default config;
