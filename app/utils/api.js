@@ -4,16 +4,18 @@ const id = "YOUR_CLIENT_ID";
 const sec = "YOUR_SECRET_ID";
 const params = "?client_id=" + id + "&client_secret=" + sec;
 
-function getProfile (username) {
-    return axios.get(`https://api.github.com/users/${username}${params}`)
-        .then((user) => {
-            return user.data;
-    });
+async function getProfile (username = 'ethriel3695') {
+    try {
+     const user = await axios.get(`https://api.github.com/users/${username}${params}`)
+        return user.data;
+    } catch (error) {
+        console.log(`Error in player data ${error}`);
+    }
 }
 
-function getRepos (username) {
-    return axios.get(`https://api.github.com/users/${username}/repos${params} 
-        &per_page=100`)
+function getRepos (username = 'ethriel3695') {
+    return axios
+    .get(`https://api.github.com/users/${username}/repos${params}&per_page=100`)
 }
 
 function getStarCount ({data}) {
@@ -62,8 +64,8 @@ export function battle (players) {
 }
 export function fetchPopularRepos (language) {
     const encodedURI = window.encodeURI
-    (`https://api.github.com/search/repositories?q=stars:` +
-    `>1+language:${language}&sort=stars&order=desc&type=Repositories`);
+    (`https://api.github.com/search/repositories?q=stars:>1+
+language:${language}&sort=stars&order=desc&type=Repositories`);
 
     return axios.get(encodedURI)
         .then((response) => {
