@@ -36,19 +36,19 @@ function handleError (error) {
     return null;
 }
 
-function getUserData(player) {
-    return axios.all([
-        getProfile(player),
-        getRepos(player)
-    ]).then((data) => {
-        var profile = data[0];
-        var repos = data[1];
+async function getUserData(player) {
+    try {
+        const data = await axios.all([getProfile(player), getRepos(player)]);
+        const profile = data[0];
+        const repos = data[1];
 
         return {
             profile: profile,
             score: calculateScore(profile, repos)
         }
-    })
+    } catch (error) {
+        console.log(`This is an error with user data: ${error}`);
+    }
 }
 
 function sortPlayers (players) {
@@ -62,13 +62,10 @@ export function battle (players) {
     .then(sortPlayers)
     .catch(handleError)
 }
-export function fetchPopularRepos (language) {
+export async function fetchPopularRepos (language) {
     const encodedURI = window.encodeURI
     (`https://api.github.com/search/repositories?q=stars:>1+
 language:${language}&sort=stars&order=desc&type=Repositories`);
-
-    return axios.get(encodedURI)
-        .then((response) => {
-            return response.data.items;
-        });
+    const response = await axios.get(encodedURI)
+        return response.data.items;
 }
